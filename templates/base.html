@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>{% block titulo %}{%endblock%}Agenda</title>
+    {% include 'arq_parciais/head.html' %}
+    <style>
+        body{
+            background-color: rgba(230,230,230,0.5)
+        }
+    </style>
+    <script>
+        function login(){
+            window.location.href = "{% url 'index_login' %}"
+        }
+        function cadastro(){
+            window.location.href = "{% url 'cadastro' %}"
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- Navigation -->
+{% include 'arq_parciais/navegation.html' %}
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            {% if 'accounts' not in request.path %}
+                <br><br>
+                <form method="get" action="{% url 'busca' %}">
+                  <div class="form-group row">
+                    <br class="col-12">
+                      <input class="form-control"
+                             type="search" value="{{ request.GET.termo }}"
+                             id="search-input"
+                             placeholder="Digite sua pesquisa"
+                             name="termo">
+                      {% include 'arq_parciais/mensagens.html' %}
+                    </div>
+                </form>
+            {% endif %}
+
+            {% block conteudo %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.slim.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+</body>
+</html>
